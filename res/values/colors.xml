@@ -1,0 +1,14 @@
+<resources>
+
+    <color name="black_overlay">#66000000</color>
+    
+    <!-- Buttons -->
+    <color name="button_mode_autonomous">#ffff00</color>
+    <color name="button_mode_teleop">#00ff00</color>
+    
+    <color name="red_alliance">#ff0000</color>
+    <color name="blue_alliance">#0000ff</color>
+    
+    <color name="important_text">#ff34b3</color>
+
+</resources>
