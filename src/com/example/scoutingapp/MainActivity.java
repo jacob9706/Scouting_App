@@ -50,7 +50,7 @@ public class MainActivity extends Activity {
 				if (cursor.moveToFirst()) {
 					do {
 						Log.d("MY LOG!!!", cursor.getString(0) + ", " + cursor.getString(1) + ", " + cursor.getString(2));
-						queueItems.add(new QueueItem(cursor.getInt(1), cursor.getInt(2)));
+						queueItems.add(new QueueItem(cursor.getInt(1), cursor.getInt(2), QueueItem.QUEUE_ITEM_COLOR_UNKNOWN));
 						listViewList.add("Match: " + cursor.getString(1) + "    " + "Team: " + cursor.getString(2));
 					} while (cursor.moveToNext());
 
@@ -73,7 +73,7 @@ public class MainActivity extends Activity {
 				intent.putExtra("team_number", queueItems.get(position).teamNumber);
 
 				// TODO: Update database file to have color.
-				intent.putExtra("team_color", (position % 2 == 0 ? "blue" : "red"));
+				intent.putExtra("team_color", (position % 2 == 0 ? QueueItem.QUEUE_ITEM_COLOR_BLUE : QueueItem.QUEUE_ITEM_COLOR_RED));
 
 				startActivity(intent);
 			}

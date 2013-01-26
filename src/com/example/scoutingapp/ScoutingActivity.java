@@ -1,12 +1,12 @@
 package com.example.scoutingapp;
 
-import utils.DataType;
+import utils.Constants;
+import utils.DataTypes;
 import utils.DatabaseHelper;
 import utils.MatchData;
+import utils.NumberPickerCustom;
 import utils.QueueItem;
 import utils.Toggle;
-import utils.Constants;
-
 import android.app.Activity;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -39,11 +39,11 @@ public class ScoutingActivity extends Activity {
 	Button missedButton = null;
 	
 	// NumberPickers
-	NumberPicker scoreHighNumberPicker = null;
-	NumberPicker scoreMiddleLeftNumberPicker = null;
-	NumberPicker scoreMiddleRightNumberPicker = null;
-	NumberPicker scoreLowNumberPicker = null;
-	NumberPicker missedNumberPicker = null;
+	NumberPickerCustom scoreHighNumberPicker = null;
+	NumberPickerCustom scoreMiddleLeftNumberPicker = null;
+	NumberPickerCustom scoreMiddleRightNumberPicker = null;
+	NumberPickerCustom scoreLowNumberPicker = null;
+	NumberPickerCustom missedNumberPicker = null;
 	
 	// TextViews
 	TextView matchNumberTextView = null;
@@ -94,8 +94,8 @@ public class ScoutingActivity extends Activity {
 	private void setup() {
 		setupDatabase();
 		setupLayouts();
-		setupVisualObjects();
 		setupTextViews();
+		setupVisualObjects();
 		setupQueueItems();
 	}
 	
@@ -103,13 +103,23 @@ public class ScoutingActivity extends Activity {
 		Bundle b = getIntent().getExtras();
 		int matchNumber = b.getInt("match_number");
 		int teamNumber = b.getInt("team_number");
-		String teamColor = b.getString("team_color");
+		int teamColor;
+		if (b.containsKey("team_color")) {
+			teamColor = b.getInt("team_color");
+		} else {
+			teamColor = QueueItem.QUEUE_ITEM_COLOR_UNKNOWN;
+		}
+		
+		Log.w("TEST!!!!!!!!!!!!!!!", "Test::: " + teamColor);
+		
+		queueItem = new QueueItem(matchNumber, teamNumber, teamColor);
 		
 		changeAlianceColor(teamColor);
 		
-		matchData = new MatchData(matchNumber);
-		teamNumberTextView.setText(Integer.toString(teamNumber));
-		matchNumberTextView.setText(Integer.toString(matchNumber));
+		matchData = new MatchData(queueItem);
+		
+		teamNumberTextView.setText(Integer.toString(queueItem.teamNumber));
+		matchNumberTextView.setText(Integer.toString(queueItem.matchNumber));
 	}
 	
 	private void setupTextViews() {
@@ -153,47 +163,37 @@ public class ScoutingActivity extends Activity {
     private void setupNumberPickers() {
     	// The setDescendantFocusablility method stops the keyboard form showing up
     	
-    	scoreHighNumberPicker = (NumberPicker)findViewById(R.id.number_picker_score_high);
-    	scoreHighNumberPicker.setOnValueChangedListener(scoreGeneralNumberPickerOnValueChangeListener);
-    	scoreHighNumberPicker.setMinValue(0);
-    	scoreHighNumberPicker.setMaxValue(1000);
+    	scoreHighNumberPicker = (NumberPickerCustom)findViewById(R.id.number_picker_score_high);
+    	scoreHighNumberPicker.setOnValueChangeListener(scoreGeneralNumberPickerOnValueChangeListener);
     	scoreHighNumberPicker.setDescendantFocusability(NumberPicker.FOCUS_BLOCK_DESCENDANTS);
     	
-    	scoreMiddleLeftNumberPicker = (NumberPicker)findViewById(R.id.number_picker_score_middle_left);
-    	scoreMiddleLeftNumberPicker.setOnValueChangedListener(scoreGeneralNumberPickerOnValueChangeListener);
-    	scoreMiddleLeftNumberPicker.setMinValue(0);
-    	scoreMiddleLeftNumberPicker.setMaxValue(1000);
+    	scoreMiddleLeftNumberPicker = (NumberPickerCustom)findViewById(R.id.number_picker_score_middle_left);
+    	scoreMiddleLeftNumberPicker.setOnValueChangeListener(scoreGeneralNumberPickerOnValueChangeListener);
     	scoreMiddleLeftNumberPicker.setDescendantFocusability(NumberPicker.FOCUS_BLOCK_DESCENDANTS);
     	
-    	scoreMiddleRightNumberPicker = (NumberPicker)findViewById(R.id.number_picker_score_middle_right);
-    	scoreMiddleRightNumberPicker.setOnValueChangedListener(scoreGeneralNumberPickerOnValueChangeListener);
-    	scoreMiddleRightNumberPicker.setMinValue(0);
-    	scoreMiddleRightNumberPicker.setMaxValue(1000);
+    	scoreMiddleRightNumberPicker = (NumberPickerCustom)findViewById(R.id.number_picker_score_middle_right);
+    	scoreMiddleRightNumberPicker.setOnValueChangeListener(scoreGeneralNumberPickerOnValueChangeListener);
     	scoreMiddleRightNumberPicker.setDescendantFocusability(NumberPicker.FOCUS_BLOCK_DESCENDANTS);
     	
-    	scoreLowNumberPicker = (NumberPicker)findViewById(R.id.number_picker_score_low);
-    	scoreLowNumberPicker.setOnValueChangedListener(scoreGeneralNumberPickerOnValueChangeListener);
-    	scoreLowNumberPicker.setMinValue(0);
-    	scoreLowNumberPicker.setMaxValue(1000);
+    	scoreLowNumberPicker = (NumberPickerCustom)findViewById(R.id.number_picker_score_low);
+    	scoreLowNumberPicker.setOnValueChangeListener(scoreGeneralNumberPickerOnValueChangeListener);
     	scoreLowNumberPicker.setDescendantFocusability(NumberPicker.FOCUS_BLOCK_DESCENDANTS);
     	
-    	missedNumberPicker = (NumberPicker)findViewById(R.id.number_picker_missed_shots);
-    	missedNumberPicker.setOnValueChangedListener(scoreGeneralNumberPickerOnValueChangeListener);
-    	missedNumberPicker.setMinValue(0);
-    	missedNumberPicker.setMaxValue(1000);
+    	missedNumberPicker = (NumberPickerCustom)findViewById(R.id.number_picker_missed_shots);
+    	missedNumberPicker.setOnValueChangeListener(scoreGeneralNumberPickerOnValueChangeListener);
     	missedNumberPicker.setDescendantFocusability(NumberPicker.FOCUS_BLOCK_DESCENDANTS);
     }
     
     
     
     /*===============================================
-	 * Score Related Methods
+	 * Visusal Related Methods
 	 *=============================================*/
-    private void changeAlianceColor(String color) {
-    	if (color.equalsIgnoreCase("red")) {
+    private void changeAlianceColor(int _color) {
+    	if (_color == QueueItem.QUEUE_ITEM_COLOR_RED) {
     		scoresRelativeLayout.setBackgroundColor(getResources().getColor(R.color.red_alliance));
     	}
-    	else if (color.equalsIgnoreCase("blue")) {
+    	else if (_color == QueueItem.QUEUE_ITEM_COLOR_BLUE) {
     		scoresRelativeLayout.setBackgroundColor(getResources().getColor(R.color.blue_alliance));
     	}
     	else {
@@ -212,8 +212,8 @@ public class ScoutingActivity extends Activity {
     			matchData.teleopScores[Constants.SCORE_HIGH]++;
     			scoreHighNumberPicker.setValue(matchData.teleopScores[Constants.SCORE_HIGH]);
     		} else {
-    			matchData.autonomousScores[Constants.SCORE_HIGH]++;
-    			scoreHighNumberPicker.setValue(matchData.autonomousScores[Constants.SCORE_HIGH]);
+    			matchData.scoresAutonomous[DataTypes.SCORE_AUTONOMOUS_TOP_INDEX].setData(matchData.scoresAutonomous[DataTypes.SCORE_AUTONOMOUS_TOP_INDEX].getData() + 1);
+    			scoreHighNumberPicker.setValue(matchData.scoresAutonomous[DataTypes.SCORE_AUTONOMOUS_TOP_INDEX].getData());
     		}
     	}
     	else if (_id == scoreMiddleLeftButton.getId()) {
@@ -319,15 +319,15 @@ public class ScoutingActivity extends Activity {
 	/*===============================================
 	 * NumberPicker Listeners
 	 *=============================================*/
-	NumberPicker.OnValueChangeListener scoreGeneralNumberPickerOnValueChangeListener = new NumberPicker.OnValueChangeListener() {
+	NumberPickerCustom.ValueChangeListener scoreGeneralNumberPickerOnValueChangeListener = new NumberPickerCustom.ValueChangeListener() {
 
 		@Override
-		public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
+		public void onNumberPickerValueChange(NumberPickerCustom picker, int newVal) {
 			if (picker.getId() == scoreHighNumberPicker.getId()) {
 				if (modeButtonToggle.getStatus() == Constants.TELEOP_STATUS) {
 	    			matchData.teleopScores[Constants.SCORE_HIGH] = newVal;
 	    		} else {
-	    			matchData.autonomousScores[Constants.SCORE_HIGH] = newVal;
+	    			matchData.scoresAutonomous[DataTypes.SCORE_AUTONOMOUS_TOP_INDEX].setData(newVal);
 	    		}
 			}
 			else if (picker.getId() == scoreMiddleLeftNumberPicker.getId()) {

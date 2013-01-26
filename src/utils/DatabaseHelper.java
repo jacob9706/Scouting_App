@@ -1,5 +1,6 @@
 package utils;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -17,6 +18,16 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 	TABLE_MATCHES = "matches",
 	TABLE_DATA = "data",
 	TABLE_DATA_TYPES = "data_types";
+	
+	private static DatabaseHelper mInstance = null;
+	
+	public static DatabaseHelper getInstance(Context ctx) {
+	      
+	    if (mInstance == null) {
+	      mInstance = new DatabaseHelper(ctx.getApplicationContext());
+	    }
+	    return mInstance;
+	  }
 
 	public DatabaseHelper(Context _context) {
 		super(_context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -59,10 +70,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 			String query = "INSERT INTO " + TABLE_DATA_TYPES + " VALUES(NULL, (?), (?));";
 			SQLiteStatement statement = _db.compileStatement(query);
 			
-			for (DataType data : Constants.DATA_TYPES) {
-				statement.bindString(1, data.name);
-				statement.bindString(2, data.type);
-				statement.execute();
+			for (DataType data : DataTypes.data.values())
+			{
+				statement.bindString(1, data.getName());
+				statement.bindString(2, data.getType());
+				long id = statement.executeInsert();
+				data.setId(id);
 			}
 			
 			_db.setTransactionSuccessful();
@@ -84,23 +97,30 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 	}
 	
 	// TODO: Add CRUD operations
-	
-	public DataType testByReturningADataType(String name) {
+	public boolean addEntry(MatchData _data) {
+		SQLiteDatabase db = this.getWritableDatabase();
 		
-		SQLiteDatabase db = this.getReadableDatabase();
-		 
-	    Cursor cursor = db.query(TABLE_DATA_TYPES, new String[] { "name",
-	            "type" }, "name" + "=?",
-	            new String[] { name }, null, null, null, null);
-	    if (cursor != null) {
-	        cursor.moveToFirst();
-	 
-	        DataType data = new DataType(cursor.getString(0), cursor.getString(1));
-	        return data;
-	    }
-
-	    return null;
-	    
+//		String query = "INSERT INTO " + TABLE_MATCHES + " VALUES(NULL, (?), (?));";
+//		
+//		SQLiteStatement statement = db.compileStatement(query);
+//		statement.bindDouble(1, _data.queueItem.matchNumber);
+//		statement.bindDouble(2, _data.queueItem.teamNumber);
+//		statement.execute();
+		
+		ContentValues insertValues = new ContentValues();
+		insertValues.put("match_number", _data.queueItem.matchNumber);
+		insertValues.put("team_number", _data.queueItem.teamNumber);
+		
+		long lastId = db.insert(TABLE_MATCHES, null, insertValues);
+		
+		if (lastId == -1) {
+			return false;
+		}
+		
+		String query = "INSERT INTO " + TABLE_DATA + " VALUES(NULL, (?),(?),(?));";
+		SQLiteStatement statement = db.compileStatement(query);
+		
+		return true;
 	}
 
 }

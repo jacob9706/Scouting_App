@@ -9,6 +9,8 @@
     <color name="red_alliance">#ff0000</color>
     <color name="blue_alliance">#0000ff</color>
     
+    <color name="purple">#800080</color>
+    
     <color name="important_text">#ff34b3</color>
 
 </resources>

@@ -5,7 +5,7 @@
 	android:layout_height="fill_parent"
 	android:id="@+id/WholeScreen">
 
-	<utils.NumberPicker
+	<utils.NumberPickerCustom
 	    android:id="@+id/SpinRate"
 	    android:layout_width="wrap_content"
 	    android:layout_height="wrap_content"
@@ -13,7 +13,7 @@
 	    android:layout_marginTop="60dp"
 	    vertical="true"
 	    android:gravity="center" >
-	</utils.NumberPicker>
+	</utils.NumberPickerCustom>
 
 	<TextView
 	    android:id="@+id/textView1"

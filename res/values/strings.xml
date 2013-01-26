@@ -27,5 +27,23 @@
     
     <string name="text_view_match_number_label">Match: </string>
     <string name="text_view_match_number">None</string>
+    
+    <string name="text_view_hang_label">Hangability</string>
+    <string name="text_view_pushability_label">Pushability</string>
+    
+    <!-- Arrays -->
+    <string-array name="spinner_hangability_options_array">
+        <item>No Attempt</item>
+        <item>Attempt and Failed</item>
+        <item>Low Hang</item>
+        <item>Middle Hang</item>
+        <item>High Hang</item>
+    </string-array>
+    
+    <string-array name="spinner_pushability_options_array">
+        <item>Easily Pushed</item>
+        <item>Average</item>
+        <item>I\'m Not Moving!</item>
+    </string-array>
 
 </resources>

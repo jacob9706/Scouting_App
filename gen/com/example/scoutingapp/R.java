@@ -8,6 +8,12 @@
 package com.example.scoutingapp;
 
 public final class R {
+    public static final class array {
+        /**  Arrays 
+         */
+        public static final int spinner_hangability_options_array=0x7f060000;
+        public static final int spinner_pushability_options_array=0x7f060001;
+    }
     public static final class attr {
         /** <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
@@ -25,39 +31,44 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
          */
         public static final int button_mode_autonomous=0x7f040001;
         public static final int button_mode_teleop=0x7f040002;
-        public static final int important_text=0x7f040005;
+        public static final int important_text=0x7f040006;
+        public static final int purple=0x7f040005;
         public static final int red_alliance=0x7f040003;
     }
     public static final class drawable {
         public static final int ic_launcher=0x7f020000;
     }
     public static final class id {
-        public static final int SpinRate=0x7f070018;
-        public static final int WholeScreen=0x7f070017;
-        public static final int button_missed_shots=0x7f07000b;
-        public static final int button_mode=0x7f070000;
-        public static final int button_score_high=0x7f070007;
-        public static final int button_score_low=0x7f07000a;
-        public static final int button_score_middle_left=0x7f070008;
-        public static final int button_score_middle_right=0x7f070009;
-        public static final int mylist=0x7f070016;
-        public static final int number_picker_missed_shots=0x7f070015;
-        public static final int number_picker_score_high=0x7f070012;
-        public static final int number_picker_score_low=0x7f070014;
-        public static final int number_picker_score_middle_left=0x7f070011;
-        public static final int number_picker_score_middle_right=0x7f070013;
-        public static final int relative_layout_scores=0x7f070006;
-        public static final int scroll_view=0x7f070001;
-        public static final int textView1=0x7f070019;
-        public static final int text_view_bottom_basket_label=0x7f07000f;
-        public static final int text_view_match_number=0x7f070005;
-        public static final int text_view_match_number_label=0x7f070004;
-        public static final int text_view_middle_basket_left_label=0x7f07000c;
-        public static final int text_view_middle_basket_right_label=0x7f07000e;
-        public static final int text_view_missed_shots_label=0x7f070010;
-        public static final int text_view_team=0x7f070003;
-        public static final int text_view_team_label=0x7f070002;
-        public static final int text_view_top_basket_label=0x7f07000d;
+        public static final int SpinRate=0x7f08001c;
+        public static final int WholeScreen=0x7f08001b;
+        public static final int button_missed_shots=0x7f08000b;
+        public static final int button_mode=0x7f080000;
+        public static final int button_score_high=0x7f080007;
+        public static final int button_score_low=0x7f08000a;
+        public static final int button_score_middle_left=0x7f080008;
+        public static final int button_score_middle_right=0x7f080009;
+        public static final int mylist=0x7f08001a;
+        public static final int number_picker_missed_shots=0x7f080015;
+        public static final int number_picker_score_high=0x7f080012;
+        public static final int number_picker_score_low=0x7f080014;
+        public static final int number_picker_score_middle_left=0x7f080011;
+        public static final int number_picker_score_middle_right=0x7f080013;
+        public static final int relative_layout_scores=0x7f080006;
+        public static final int scroll_view=0x7f080001;
+        public static final int spinner_hangability=0x7f080018;
+        public static final int spinner_pushability=0x7f080019;
+        public static final int textView1=0x7f08001d;
+        public static final int text_view_bottom_basket_label=0x7f08000f;
+        public static final int text_view_hang_label=0x7f080016;
+        public static final int text_view_match_number=0x7f080005;
+        public static final int text_view_match_number_label=0x7f080004;
+        public static final int text_view_middle_basket_left_label=0x7f08000c;
+        public static final int text_view_middle_basket_right_label=0x7f08000e;
+        public static final int text_view_missed_shots_label=0x7f080010;
+        public static final int text_view_pushability_label=0x7f080017;
+        public static final int text_view_team=0x7f080003;
+        public static final int text_view_team_label=0x7f080002;
+        public static final int text_view_top_basket_label=0x7f08000d;
     }
     public static final class layout {
         public static final int activity_main=0x7f030000;
@@ -76,11 +87,13 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int button_score_middle_left=0x7f050005;
         public static final int button_score_middle_right=0x7f050004;
         public static final int text_view_bottom_basket_label=0x7f05000b;
+        public static final int text_view_hang_label=0x7f050011;
         public static final int text_view_match_number=0x7f050010;
         public static final int text_view_match_number_label=0x7f05000f;
         public static final int text_view_middle_basket_left_label=0x7f050009;
         public static final int text_view_middle_basket_right_label=0x7f05000a;
         public static final int text_view_missed_shots_label=0x7f05000c;
+        public static final int text_view_pushability_label=0x7f050012;
         public static final int text_view_team=0x7f05000e;
         public static final int text_view_team_label=0x7f05000d;
         /**  Labels 
@@ -109,15 +122,15 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
     
  API 14 theme customizations can go here. 
          */
-        public static final int AppBaseTheme=0x7f060000;
+        public static final int AppBaseTheme=0x7f070000;
         /**  Application theme. 
  All customizations that are NOT specific to a particular API-level can go here. 
          */
-        public static final int AppTheme=0x7f060001;
-        public static final int ButtonBar=0x7f060003;
-        public static final int ButtonBarButton=0x7f060002;
-        public static final int FullscreenActionBarStyle=0x7f060005;
-        public static final int FullscreenTheme=0x7f060004;
+        public static final int AppTheme=0x7f070001;
+        public static final int ButtonBar=0x7f070003;
+        public static final int ButtonBarButton=0x7f070002;
+        public static final int FullscreenActionBarStyle=0x7f070005;
+        public static final int FullscreenTheme=0x7f070004;
     }
     public static final class styleable {
         /** 
