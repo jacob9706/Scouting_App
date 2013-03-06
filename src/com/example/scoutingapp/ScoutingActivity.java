@@ -1,9 +1,9 @@
 package com.example.scoutingapp;
 
 import utils.Constants;
-import utils.DataTypes;
 import utils.DatabaseHelper;
 import utils.MatchData;
+import utils.MatchDatabaseHelper;
 import utils.NumberPickerCustom;
 import utils.QueueItem;
 import utils.Toggle;
@@ -74,7 +74,7 @@ public class ScoutingActivity extends Activity {
     	super.onCreate(_savedInstanceState);
     	
     	this.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_scouting);
         
         setup();
     }
@@ -84,6 +84,7 @@ public class ScoutingActivity extends Activity {
 		super.onPause();
 		// TODO: Save data
 		Toast.makeText(getApplicationContext(), "Hello ", Toast.LENGTH_SHORT).show();
+		saveData.execute();
 	}
     
     
@@ -103,10 +104,12 @@ public class ScoutingActivity extends Activity {
 		Bundle b = getIntent().getExtras();
 		int matchNumber = b.getInt("match_number");
 		int teamNumber = b.getInt("team_number");
-		int teamColor;
+		String teamColor;
+		
 		if (b.containsKey("team_color")) {
-			teamColor = b.getInt("team_color");
-		} else {
+			teamColor = b.getString("team_color");
+		}
+		else {
 			teamColor = QueueItem.QUEUE_ITEM_COLOR_UNKNOWN;
 		}
 		
@@ -189,11 +192,11 @@ public class ScoutingActivity extends Activity {
     /*===============================================
 	 * Visusal Related Methods
 	 *=============================================*/
-    private void changeAlianceColor(int _color) {
-    	if (_color == QueueItem.QUEUE_ITEM_COLOR_RED) {
+    private void changeAlianceColor(String _color) {
+    	if (_color.equals(QueueItem.QUEUE_ITEM_COLOR_RED_STRING)) {
     		scoresRelativeLayout.setBackgroundColor(getResources().getColor(R.color.red_alliance));
     	}
-    	else if (_color == QueueItem.QUEUE_ITEM_COLOR_BLUE) {
+    	else if (_color.equals(QueueItem.QUEUE_ITEM_COLOR_BLUE_STRING)) {
     		scoresRelativeLayout.setBackgroundColor(getResources().getColor(R.color.blue_alliance));
     	}
     	else {
@@ -206,68 +209,84 @@ public class ScoutingActivity extends Activity {
     /*===============================================
 	 * Score Related Methods
 	 *=============================================*/
-    private void handleScoreClick(int _id) {
+    @SuppressWarnings("unchecked")
+	private void handleScoreClick(int _id) {
     	if (_id == scoreHighButton.getId()) {
     		if (modeButtonToggle.getStatus() == Constants.TELEOP_STATUS) {
-    			matchData.teleopScores[Constants.SCORE_HIGH]++;
-    			scoreHighNumberPicker.setValue(matchData.teleopScores[Constants.SCORE_HIGH]);
-    		} else {
-    			matchData.scoresAutonomous[DataTypes.SCORE_AUTONOMOUS_TOP_INDEX].setData(matchData.scoresAutonomous[DataTypes.SCORE_AUTONOMOUS_TOP_INDEX].getData() + 1);
-    			scoreHighNumberPicker.setValue(matchData.scoresAutonomous[DataTypes.SCORE_AUTONOMOUS_TOP_INDEX].getData());
+    			Integer data = (Integer) matchData.dataTable.get(Constants.KEY_SCORE_HIGH_TELEOP).getData();
+    			matchData.dataTable.get(Constants.KEY_SCORE_HIGH_TELEOP).setData(data + 1);
+    			scoreHighNumberPicker.setValue(data + 1);
+    		}
+    		else {
+    			Integer data = (Integer) matchData.dataTable.get(Constants.KEY_SCORE_HIGH_AUTO).getData();
+    			matchData.dataTable.get(Constants.KEY_SCORE_HIGH_AUTO).setData(data + 1);
+    			scoreHighNumberPicker.setValue(data + 1);
     		}
     	}
     	else if (_id == scoreMiddleLeftButton.getId()) {
     		if (modeButtonToggle.getStatus() == Constants.TELEOP_STATUS) {
-    			matchData.teleopScores[Constants.SCORE_MIDDLE_LEFT]++;
-    			scoreMiddleLeftNumberPicker.setValue(matchData.teleopScores[Constants.SCORE_MIDDLE_LEFT]);
-    		} else {
-    			matchData.autonomousScores[Constants.SCORE_MIDDLE_LEFT]++;
-    			scoreMiddleLeftNumberPicker.setValue(matchData.autonomousScores[Constants.SCORE_MIDDLE_LEFT]);
+    			Integer data = (Integer) matchData.dataTable.get(Constants.KEY_SCORE_MIDDLE_LEFT_TELEOP).getData();
+    			matchData.dataTable.get(Constants.KEY_SCORE_MIDDLE_LEFT_TELEOP).setData(data + 1);
+    			scoreMiddleLeftNumberPicker.setValue(data + 1);
+    		}
+    		else {
+    			Integer data = (Integer) matchData.dataTable.get(Constants.KEY_SCORE_MIDDLE_LEFT_AUTO).getData();
+    			matchData.dataTable.get(Constants.KEY_SCORE_MIDDLE_LEFT_AUTO).setData(data + 1);
+    			scoreMiddleLeftNumberPicker.setValue(data + 1);
     		}
     	}
     	else if (_id == scoreMiddleRightButton.getId()) {
     		if (modeButtonToggle.getStatus() == Constants.TELEOP_STATUS) {
-    			matchData.teleopScores[Constants.SCORE_MIDDLE_RIGHT]++;
-    			scoreMiddleRightNumberPicker.setValue(matchData.teleopScores[Constants.SCORE_MIDDLE_RIGHT]);
-    		} else {
-    			matchData.autonomousScores[Constants.SCORE_MIDDLE_RIGHT]++;
-    			scoreMiddleRightNumberPicker.setValue(matchData.autonomousScores[Constants.SCORE_MIDDLE_RIGHT]);
+    			Integer data = (Integer) matchData.dataTable.get(Constants.KEY_SCORE_MIDDLE_RIGHT_TELEOP).getData();
+    			matchData.dataTable.get(Constants.KEY_SCORE_MIDDLE_RIGHT_TELEOP).setData(data + 1);
+    			scoreMiddleRightNumberPicker.setValue(data + 1);
+    		}
+    		else {
+    			Integer data = (Integer) matchData.dataTable.get(Constants.KEY_SCORE_MIDDLE_RIGHT_AUTO).getData();
+    			matchData.dataTable.get(Constants.KEY_SCORE_MIDDLE_RIGHT_AUTO).setData(data + 1);
+    			scoreMiddleRightNumberPicker.setValue(data + 1);
     		}
     	}
     	else if (_id == scoreLowButton.getId()) {
     		if (modeButtonToggle.getStatus() == Constants.TELEOP_STATUS) {
-    			matchData.teleopScores[Constants.SCORE_LOW]++;
-    			scoreLowNumberPicker.setValue(matchData.teleopScores[Constants.SCORE_LOW]);
-    		} else {
-    			matchData.autonomousScores[Constants.SCORE_LOW]++;
-    			scoreLowNumberPicker.setValue(matchData.autonomousScores[Constants.SCORE_LOW]);
+    			Integer data = (Integer) matchData.dataTable.get(Constants.KEY_SCORE_LOW_TELEOP).getData();
+    			matchData.dataTable.get(Constants.KEY_SCORE_LOW_TELEOP).setData(data + 1);
+    			scoreLowNumberPicker.setValue(data + 1);
+    		}
+    		else {
+    			Integer data = (Integer) matchData.dataTable.get(Constants.KEY_SCORE_LOW_AUTO).getData();
+    			matchData.dataTable.get(Constants.KEY_SCORE_LOW_AUTO).setData(data + 1);
+    			scoreLowNumberPicker.setValue(data + 1);
     		}
     	}
     	else if (_id == missedButton.getId()) {
     		if (modeButtonToggle.getStatus() == Constants.TELEOP_STATUS) {
-    			matchData.teleopScores[Constants.MISSED_SHOTS]++;
-    			missedNumberPicker.setValue(matchData.teleopScores[Constants.MISSED_SHOTS]);
-    		} else {
-    			matchData.autonomousScores[Constants.MISSED_SHOTS]++;
-    			missedNumberPicker.setValue(matchData.autonomousScores[Constants.MISSED_SHOTS]);
+    			Integer data = (Integer) matchData.dataTable.get(Constants.KEY_SCORE_MISSES_TELEOP).getData();
+    			matchData.dataTable.get(Constants.KEY_SCORE_MISSES_TELEOP).setData(data + 1);
+    			missedNumberPicker.setValue(data + 1);
+    		}
+    		else {
+    			Integer data = (Integer) matchData.dataTable.get(Constants.KEY_SCORE_MISSES_AUTO).getData();
+    			matchData.dataTable.get(Constants.KEY_SCORE_MISSES_AUTO).setData(data + 1);
+    			missedNumberPicker.setValue(data + 1);
     		}
     	}
     }
     
     private void toggleScoresBasedOnMode(boolean _mode) {
     	if (_mode == Constants.TELEOP_STATUS) {
-    		scoreHighNumberPicker.setValue(matchData.teleopScores[Constants.SCORE_HIGH]);
-    		scoreMiddleLeftNumberPicker.setValue(matchData.teleopScores[Constants.SCORE_MIDDLE_LEFT]);
-    		scoreMiddleRightNumberPicker.setValue(matchData.teleopScores[Constants.SCORE_MIDDLE_RIGHT]);
-    		scoreLowNumberPicker.setValue(matchData.teleopScores[Constants.SCORE_LOW]);
-    		missedNumberPicker.setValue(matchData.teleopScores[Constants.MISSED_SHOTS]);
+    		scoreHighNumberPicker.setValue((Integer)matchData.dataTable.get(Constants.KEY_SCORE_HIGH_TELEOP).getData());
+    		scoreMiddleLeftNumberPicker.setValue((Integer)matchData.dataTable.get(Constants.KEY_SCORE_MIDDLE_LEFT_TELEOP).getData());
+    		scoreMiddleRightNumberPicker.setValue((Integer)matchData.dataTable.get(Constants.KEY_SCORE_MIDDLE_RIGHT_TELEOP).getData());
+    		scoreLowNumberPicker.setValue((Integer)matchData.dataTable.get(Constants.KEY_SCORE_LOW_TELEOP).getData());
+    		missedNumberPicker.setValue((Integer)matchData.dataTable.get(Constants.KEY_SCORE_MISSES_TELEOP).getData());
     	}
     	else {
-    		scoreHighNumberPicker.setValue(matchData.autonomousScores[Constants.SCORE_HIGH]);
-    		scoreMiddleLeftNumberPicker.setValue(matchData.autonomousScores[Constants.SCORE_MIDDLE_LEFT]);
-    		scoreMiddleRightNumberPicker.setValue(matchData.autonomousScores[Constants.SCORE_MIDDLE_RIGHT]);
-    		scoreLowNumberPicker.setValue(matchData.autonomousScores[Constants.SCORE_LOW]);
-    		missedNumberPicker.setValue(matchData.autonomousScores[Constants.MISSED_SHOTS]);
+    		scoreHighNumberPicker.setValue((Integer)matchData.dataTable.get(Constants.KEY_SCORE_HIGH_AUTO).getData());
+    		scoreMiddleLeftNumberPicker.setValue((Integer)matchData.dataTable.get(Constants.KEY_SCORE_MIDDLE_LEFT_AUTO).getData());
+    		scoreMiddleRightNumberPicker.setValue((Integer)matchData.dataTable.get(Constants.KEY_SCORE_MIDDLE_RIGHT_AUTO).getData());
+    		scoreLowNumberPicker.setValue((Integer)matchData.dataTable.get(Constants.KEY_SCORE_LOW_AUTO).getData());
+    		missedNumberPicker.setValue((Integer)matchData.dataTable.get(Constants.KEY_SCORE_MISSES_AUTO).getData());
     	}
     }
     
@@ -321,34 +340,47 @@ public class ScoutingActivity extends Activity {
 	 *=============================================*/
 	NumberPickerCustom.ValueChangeListener scoreGeneralNumberPickerOnValueChangeListener = new NumberPickerCustom.ValueChangeListener() {
 
+		@SuppressWarnings("unchecked")
 		@Override
 		public void onNumberPickerValueChange(NumberPickerCustom picker, int newVal) {
 			if (picker.getId() == scoreHighNumberPicker.getId()) {
 				if (modeButtonToggle.getStatus() == Constants.TELEOP_STATUS) {
-	    			matchData.teleopScores[Constants.SCORE_HIGH] = newVal;
-	    		} else {
-	    			matchData.scoresAutonomous[DataTypes.SCORE_AUTONOMOUS_TOP_INDEX].setData(newVal);
+					matchData.dataTable.get(Constants.KEY_SCORE_HIGH_TELEOP).setData(newVal);
+	    		}
+				else {
+					matchData.dataTable.get(Constants.KEY_SCORE_HIGH_AUTO).setData(newVal);
 	    		}
 			}
 			else if (picker.getId() == scoreMiddleLeftNumberPicker.getId()) {
 				if (modeButtonToggle.getStatus() == Constants.TELEOP_STATUS) {
-	    			matchData.teleopScores[Constants.SCORE_MIDDLE_LEFT] = newVal;
-	    		} else {
-	    			matchData.autonomousScores[Constants.SCORE_MIDDLE_LEFT] = newVal;
+					matchData.dataTable.get(Constants.KEY_SCORE_MIDDLE_LEFT_TELEOP).setData(newVal);
+	    		}
+				else {
+					matchData.dataTable.get(Constants.KEY_SCORE_MIDDLE_LEFT_AUTO).setData(newVal);
 	    		}
 			}
 			else if (picker.getId() == scoreMiddleRightNumberPicker.getId()) {
 				if (modeButtonToggle.getStatus() == Constants.TELEOP_STATUS) {
-	    			matchData.teleopScores[Constants.SCORE_MIDDLE_RIGHT] = newVal;
-	    		} else {
-	    			matchData.autonomousScores[Constants.SCORE_MIDDLE_RIGHT] = newVal;
+					matchData.dataTable.get(Constants.KEY_SCORE_MIDDLE_RIGHT_TELEOP).setData(newVal);
+	    		}
+				else {
+					matchData.dataTable.get(Constants.KEY_SCORE_MIDDLE_RIGHT_AUTO).setData(newVal);
 	    		}
 			}
 			else if (picker.getId() == scoreLowNumberPicker.getId()) {
 				if (modeButtonToggle.getStatus() == Constants.TELEOP_STATUS) {
-	    			matchData.teleopScores[Constants.SCORE_LOW] = newVal;
-	    		} else {
-	    			matchData.autonomousScores[Constants.SCORE_LOW] = newVal;
+					matchData.dataTable.get(Constants.KEY_SCORE_LOW_TELEOP).setData(newVal);
+	    		}
+				else {
+					matchData.dataTable.get(Constants.KEY_SCORE_LOW_AUTO).setData(newVal);
+	    		}
+			}
+			else if (picker.getId() == missedNumberPicker.getId()) {
+				if (modeButtonToggle.getStatus() == Constants.TELEOP_STATUS) {
+					matchData.dataTable.get(Constants.KEY_SCORE_MISSES_TELEOP).setData(newVal);
+	    		}
+				else {
+					matchData.dataTable.get(Constants.KEY_SCORE_MISSES_AUTO).setData(newVal);
 	    		}
 			}
 		}
@@ -360,16 +392,17 @@ public class ScoutingActivity extends Activity {
 	/*===============================================
 	 * Async Tasks
 	 *=============================================*/
-	private class AsyncDatabaseUpdate extends AsyncTask<Void, Void, Boolean> {
+	AsyncTask<Void, Void, Void> saveData =  new AsyncTask<Void, Void, Void>() {
 
 		@Override
-		protected Boolean doInBackground(Void... params) {
+		protected Void doInBackground(Void... params) {
 			
-			//TODO: update / create entry
+			MatchDatabaseHelper dbHelper = MatchDatabaseHelper.getInstance(1);
+			Log.i("Log Test!!!!!!!!", dbHelper.toString());
 			
-			return true;
+			return null;
 		}
 		
-	}
+	};
 	
 }

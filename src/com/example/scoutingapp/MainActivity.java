@@ -39,23 +39,24 @@ public class MainActivity extends Activity {
 
 		String[] listArray = { "No Entries" };
 
-		File dbFile = new File(Environment.getExternalStorageDirectory().getPath() + "/Scouting/team_list.sqlite");
+//		File dbFile = new File(Environment.getExternalStorageDirectory().getPath() + "/Scouting/team_list.sqlite");
+		File dbFile = new File(Environment.getExternalStorageDirectory().getPath() + "/Scouting/tablet1.sqlite");
 
 		if (dbFile.isFile()) {
 			SQLiteDatabase dbTest = SQLiteDatabase.openOrCreateDatabase(dbFile, null);
 			if (dbTest.isOpen()) {
 				Log.e("TEST!!!!!!!", "Team Database Opened!!!!!!!!!!!!!!!!!!!!!!!!!!");
 				Cursor cursor = dbTest.rawQuery("SELECT * FROM teams", null);
-
+				
 				if (cursor.moveToFirst()) {
 					do {
-						Log.d("MY LOG!!!", cursor.getString(0) + ", " + cursor.getString(1) + ", " + cursor.getString(2));
-						queueItems.add(new QueueItem(cursor.getInt(1), cursor.getInt(2), QueueItem.QUEUE_ITEM_COLOR_UNKNOWN));
-						listViewList.add("Match: " + cursor.getString(1) + "    " + "Team: " + cursor.getString(2));
+						queueItems.add(new QueueItem(cursor.getInt(0), cursor.getInt(1), cursor.getString(2)));
+						listViewList.add("Match: " + cursor.getInt(0) + "    Team: " + cursor.getInt(1));
 					} while (cursor.moveToNext());
-
+					
 					listArray = listViewList.toArray(listArray);
 				}
+
 			}
 		}
 
@@ -71,10 +72,7 @@ public class MainActivity extends Activity {
 				Intent intent = new Intent(getApplicationContext(), ScoutingActivity.class);
 				intent.putExtra("match_number", queueItems.get(position).matchNumber);
 				intent.putExtra("team_number", queueItems.get(position).teamNumber);
-
-				// TODO: Update database file to have color.
-				intent.putExtra("team_color", (position % 2 == 0 ? QueueItem.QUEUE_ITEM_COLOR_BLUE : QueueItem.QUEUE_ITEM_COLOR_RED));
-
+				intent.putExtra("team_color", queueItems.get(position).color);
 				startActivity(intent);
 			}
 		}); 

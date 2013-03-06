@@ -31,6 +31,11 @@
     <string name="text_view_hang_label">Hangability</string>
     <string name="text_view_pushability_label">Pushability</string>
     
+    <string name="text_view_climbability_label">Climbability</string>
+    <string name="text_view_fivepointability_label">FivePointability</string>
+    
+    <string name="text_view_pickupability_label">Pickup Method</string>
+    
     <!-- Arrays -->
     <string-array name="spinner_hangability_options_array">
         <item>No Attempt</item>
@@ -44,6 +49,50 @@
         <item>Easily Pushed</item>
         <item>Average</item>
         <item>I\'m Not Moving!</item>
+    </string-array>
+    
+    <string-array name="spinner_climbability_options_array">
+        <item>No Hang</item>
+        <item>Low Hang</item>
+        <item>Mid Hang</item>
+        <item>High Hang</item>
+        <item>Failed Hang</item>
+    </string-array>
+    
+    <string-array name="spinner_pickup_method_options_array">
+        <item>No Pickup</item>
+        <item>Feeder Station</item>
+        <item>Floor</item>
+        <item>Feeder And Floor</item>
+    </string-array>
+    
+    <string-array name="spinner_fivepointability_options_array">
+        <item>Did Not Attempt</item>
+        <item>Shot And Made</item>
+        <item>Shot And Missed</item>
+        <item>Failed Dump</item>
+        <item>Dump</item>
+    </string-array>
+    
+    <string-array name="spinner_pickup_speed_options_array">
+        <item>Slow</item>
+        <item>Medium</item>
+        <item>Fast</item>
+        <item>Uber Fast</item>
+    </string-array>
+    
+    <string-array name="spinner_speed_options_array">
+        <item>Slow</item>
+        <item>Medium</item>
+        <item>Fast</item>
+        <item>Uber Fast</item>
+    </string-array>
+    
+    <string-array name="spinner_penalties_options_array">
+        <item>None</item>
+        <item>One or Two</item>
+        <item>Three or Four</item>
+        <item>Way too many</item>
     </string-array>
 
 </resources>
