@@ -1,8 +1,8 @@
 package com.example.scoutingapp;
 
 import utils.Constants;
+import utils.DataV2;
 import utils.DatabaseHelper;
-import utils.MatchData;
 import utils.MatchDatabaseHelper;
 import utils.NumberPickerCustom;
 import utils.QueueItem;
@@ -62,7 +62,7 @@ public class ScoutingActivity extends Activity {
 	 * Logical Variables
 	 *=============================================*/
 	QueueItem queueItem = null;
-	MatchData matchData = null;
+	DataV2 matchData = null;
 	
 	
 
@@ -119,7 +119,7 @@ public class ScoutingActivity extends Activity {
 		
 		changeAlianceColor(teamColor);
 		
-		matchData = new MatchData(queueItem);
+		matchData = new DataV2(queueItem);
 		
 		teamNumberTextView.setText(Integer.toString(queueItem.teamNumber));
 		matchNumberTextView.setText(Integer.toString(queueItem.matchNumber));
@@ -209,84 +209,73 @@ public class ScoutingActivity extends Activity {
     /*===============================================
 	 * Score Related Methods
 	 *=============================================*/
-    @SuppressWarnings("unchecked")
 	private void handleScoreClick(int _id) {
     	if (_id == scoreHighButton.getId()) {
     		if (modeButtonToggle.getStatus() == Constants.TELEOP_STATUS) {
-    			Integer data = (Integer) matchData.dataTable.get(Constants.KEY_SCORE_HIGH_TELEOP).getData();
-    			matchData.dataTable.get(Constants.KEY_SCORE_HIGH_TELEOP).setData(data + 1);
-    			scoreHighNumberPicker.setValue(data + 1);
+    			matchData.teleopScoreTop++;
+    			scoreHighNumberPicker.setValue(matchData.teleopScoreTop);
     		}
     		else {
-    			Integer data = (Integer) matchData.dataTable.get(Constants.KEY_SCORE_HIGH_AUTO).getData();
-    			matchData.dataTable.get(Constants.KEY_SCORE_HIGH_AUTO).setData(data + 1);
-    			scoreHighNumberPicker.setValue(data + 1);
+    			matchData.autonomousScoreTop++;
+    			scoreHighNumberPicker.setValue(matchData.autonomousScoreTop);
     		}
     	}
     	else if (_id == scoreMiddleLeftButton.getId()) {
     		if (modeButtonToggle.getStatus() == Constants.TELEOP_STATUS) {
-    			Integer data = (Integer) matchData.dataTable.get(Constants.KEY_SCORE_MIDDLE_LEFT_TELEOP).getData();
-    			matchData.dataTable.get(Constants.KEY_SCORE_MIDDLE_LEFT_TELEOP).setData(data + 1);
-    			scoreMiddleLeftNumberPicker.setValue(data + 1);
+    			matchData.teleopScoreMiddleLeft++;
+    			scoreMiddleLeftNumberPicker.setValue(matchData.teleopScoreMiddleLeft);
     		}
     		else {
-    			Integer data = (Integer) matchData.dataTable.get(Constants.KEY_SCORE_MIDDLE_LEFT_AUTO).getData();
-    			matchData.dataTable.get(Constants.KEY_SCORE_MIDDLE_LEFT_AUTO).setData(data + 1);
-    			scoreMiddleLeftNumberPicker.setValue(data + 1);
+    			matchData.autonomousScoreMiddleLeft++;
+    			scoreMiddleLeftNumberPicker.setValue(matchData.autonomousScoreMiddleLeft);
     		}
     	}
     	else if (_id == scoreMiddleRightButton.getId()) {
     		if (modeButtonToggle.getStatus() == Constants.TELEOP_STATUS) {
-    			Integer data = (Integer) matchData.dataTable.get(Constants.KEY_SCORE_MIDDLE_RIGHT_TELEOP).getData();
-    			matchData.dataTable.get(Constants.KEY_SCORE_MIDDLE_RIGHT_TELEOP).setData(data + 1);
-    			scoreMiddleRightNumberPicker.setValue(data + 1);
+    			matchData.teleopScoreMiddleRight++;
+    			scoreMiddleRightNumberPicker.setValue(matchData.teleopScoreMiddleRight);
     		}
     		else {
-    			Integer data = (Integer) matchData.dataTable.get(Constants.KEY_SCORE_MIDDLE_RIGHT_AUTO).getData();
-    			matchData.dataTable.get(Constants.KEY_SCORE_MIDDLE_RIGHT_AUTO).setData(data + 1);
-    			scoreMiddleRightNumberPicker.setValue(data + 1);
+    			matchData.autonomousScoreMiddleRight++;
+    			scoreMiddleRightNumberPicker.setValue(matchData.autonomousScoreMiddleRight);
     		}
     	}
     	else if (_id == scoreLowButton.getId()) {
     		if (modeButtonToggle.getStatus() == Constants.TELEOP_STATUS) {
-    			Integer data = (Integer) matchData.dataTable.get(Constants.KEY_SCORE_LOW_TELEOP).getData();
-    			matchData.dataTable.get(Constants.KEY_SCORE_LOW_TELEOP).setData(data + 1);
-    			scoreLowNumberPicker.setValue(data + 1);
+    			matchData.teleopScoreLow++;
+    			scoreLowNumberPicker.setValue(matchData.teleopScoreLow);
     		}
     		else {
-    			Integer data = (Integer) matchData.dataTable.get(Constants.KEY_SCORE_LOW_AUTO).getData();
-    			matchData.dataTable.get(Constants.KEY_SCORE_LOW_AUTO).setData(data + 1);
-    			scoreLowNumberPicker.setValue(data + 1);
+    			matchData.autonomousScoreLow++;
+    			scoreLowNumberPicker.setValue(matchData.autonomousScoreLow);
     		}
     	}
     	else if (_id == missedButton.getId()) {
     		if (modeButtonToggle.getStatus() == Constants.TELEOP_STATUS) {
-    			Integer data = (Integer) matchData.dataTable.get(Constants.KEY_SCORE_MISSES_TELEOP).getData();
-    			matchData.dataTable.get(Constants.KEY_SCORE_MISSES_TELEOP).setData(data + 1);
-    			missedNumberPicker.setValue(data + 1);
+    			matchData.teleopMisses++;
+    			missedNumberPicker.setValue(matchData.teleopMisses);
     		}
     		else {
-    			Integer data = (Integer) matchData.dataTable.get(Constants.KEY_SCORE_MISSES_AUTO).getData();
-    			matchData.dataTable.get(Constants.KEY_SCORE_MISSES_AUTO).setData(data + 1);
-    			missedNumberPicker.setValue(data + 1);
+    			matchData.autonomousMisses++;
+    			missedNumberPicker.setValue(matchData.autonomousMisses);
     		}
     	}
     }
     
     private void toggleScoresBasedOnMode(boolean _mode) {
     	if (_mode == Constants.TELEOP_STATUS) {
-    		scoreHighNumberPicker.setValue((Integer)matchData.dataTable.get(Constants.KEY_SCORE_HIGH_TELEOP).getData());
-    		scoreMiddleLeftNumberPicker.setValue((Integer)matchData.dataTable.get(Constants.KEY_SCORE_MIDDLE_LEFT_TELEOP).getData());
-    		scoreMiddleRightNumberPicker.setValue((Integer)matchData.dataTable.get(Constants.KEY_SCORE_MIDDLE_RIGHT_TELEOP).getData());
-    		scoreLowNumberPicker.setValue((Integer)matchData.dataTable.get(Constants.KEY_SCORE_LOW_TELEOP).getData());
-    		missedNumberPicker.setValue((Integer)matchData.dataTable.get(Constants.KEY_SCORE_MISSES_TELEOP).getData());
+    		scoreHighNumberPicker.setValue(matchData.teleopScoreTop);
+    		scoreMiddleLeftNumberPicker.setValue(matchData.teleopScoreMiddleLeft);
+    		scoreMiddleRightNumberPicker.setValue(matchData.teleopScoreMiddleRight);
+    		scoreLowNumberPicker.setValue(matchData.teleopScoreLow);
+    		missedNumberPicker.setValue(matchData.teleopMisses);
     	}
     	else {
-    		scoreHighNumberPicker.setValue((Integer)matchData.dataTable.get(Constants.KEY_SCORE_HIGH_AUTO).getData());
-    		scoreMiddleLeftNumberPicker.setValue((Integer)matchData.dataTable.get(Constants.KEY_SCORE_MIDDLE_LEFT_AUTO).getData());
-    		scoreMiddleRightNumberPicker.setValue((Integer)matchData.dataTable.get(Constants.KEY_SCORE_MIDDLE_RIGHT_AUTO).getData());
-    		scoreLowNumberPicker.setValue((Integer)matchData.dataTable.get(Constants.KEY_SCORE_LOW_AUTO).getData());
-    		missedNumberPicker.setValue((Integer)matchData.dataTable.get(Constants.KEY_SCORE_MISSES_AUTO).getData());
+    		scoreHighNumberPicker.setValue(matchData.autonomousScoreTop);
+    		scoreMiddleLeftNumberPicker.setValue(matchData.autonomousScoreMiddleLeft);
+    		scoreMiddleRightNumberPicker.setValue(matchData.autonomousScoreMiddleRight);
+    		scoreLowNumberPicker.setValue(matchData.autonomousScoreLow);
+    		missedNumberPicker.setValue(matchData.autonomousMisses);
     	}
     }
     
@@ -340,47 +329,46 @@ public class ScoutingActivity extends Activity {
 	 *=============================================*/
 	NumberPickerCustom.ValueChangeListener scoreGeneralNumberPickerOnValueChangeListener = new NumberPickerCustom.ValueChangeListener() {
 
-		@SuppressWarnings("unchecked")
 		@Override
 		public void onNumberPickerValueChange(NumberPickerCustom picker, int newVal) {
 			if (picker.getId() == scoreHighNumberPicker.getId()) {
 				if (modeButtonToggle.getStatus() == Constants.TELEOP_STATUS) {
-					matchData.dataTable.get(Constants.KEY_SCORE_HIGH_TELEOP).setData(newVal);
+					matchData.teleopScoreTop = newVal;
 	    		}
 				else {
-					matchData.dataTable.get(Constants.KEY_SCORE_HIGH_AUTO).setData(newVal);
+					matchData.autonomousScoreTop = newVal;
 	    		}
 			}
 			else if (picker.getId() == scoreMiddleLeftNumberPicker.getId()) {
 				if (modeButtonToggle.getStatus() == Constants.TELEOP_STATUS) {
-					matchData.dataTable.get(Constants.KEY_SCORE_MIDDLE_LEFT_TELEOP).setData(newVal);
+					matchData.teleopScoreMiddleLeft = newVal;
 	    		}
 				else {
-					matchData.dataTable.get(Constants.KEY_SCORE_MIDDLE_LEFT_AUTO).setData(newVal);
+					matchData.autonomousScoreMiddleLeft = newVal;
 	    		}
 			}
 			else if (picker.getId() == scoreMiddleRightNumberPicker.getId()) {
 				if (modeButtonToggle.getStatus() == Constants.TELEOP_STATUS) {
-					matchData.dataTable.get(Constants.KEY_SCORE_MIDDLE_RIGHT_TELEOP).setData(newVal);
+					matchData.teleopScoreMiddleRight = newVal;
 	    		}
 				else {
-					matchData.dataTable.get(Constants.KEY_SCORE_MIDDLE_RIGHT_AUTO).setData(newVal);
+					matchData.autonomousScoreMiddleRight = newVal;
 	    		}
 			}
 			else if (picker.getId() == scoreLowNumberPicker.getId()) {
 				if (modeButtonToggle.getStatus() == Constants.TELEOP_STATUS) {
-					matchData.dataTable.get(Constants.KEY_SCORE_LOW_TELEOP).setData(newVal);
+					matchData.teleopScoreLow = newVal;
 	    		}
 				else {
-					matchData.dataTable.get(Constants.KEY_SCORE_LOW_AUTO).setData(newVal);
+					matchData.autonomousScoreLow = newVal;
 	    		}
 			}
 			else if (picker.getId() == missedNumberPicker.getId()) {
 				if (modeButtonToggle.getStatus() == Constants.TELEOP_STATUS) {
-					matchData.dataTable.get(Constants.KEY_SCORE_MISSES_TELEOP).setData(newVal);
+					matchData.teleopMisses = newVal;
 	    		}
 				else {
-					matchData.dataTable.get(Constants.KEY_SCORE_MISSES_AUTO).setData(newVal);
+					matchData.autonomousMisses = newVal;
 	    		}
 			}
 		}
