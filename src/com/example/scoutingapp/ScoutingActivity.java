@@ -13,9 +13,11 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.NumberPicker;
 import android.widget.RelativeLayout;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -44,6 +46,16 @@ public class ScoutingActivity extends Activity {
 	NumberPickerCustom scoreMiddleRightNumberPicker = null;
 	NumberPickerCustom scoreLowNumberPicker = null;
 	NumberPickerCustom missedNumberPicker = null;
+	
+	// Spinners
+	Spinner 
+	hangabilitySpinner = null,
+	pushabilitySpinner = null,
+	pickupMethodSpinner = null,
+	pickupSpeedSpinner = null,
+	fivePointablilitySpinner = null,
+	penaltiesSpinner = null,
+	defenceSpinner = null;
 	
 	// TextViews
 	TextView matchNumberTextView = null;
@@ -80,10 +92,11 @@ public class ScoutingActivity extends Activity {
     }
 	
 	@Override
-	protected void onPause() {
-		super.onPause();
+	protected void onStop() {
+		super.onStop();
 		// TODO: Save data
 		Toast.makeText(getApplicationContext(), "Hello ", Toast.LENGTH_SHORT).show();
+		SaveData saveData = new SaveData();
 		saveData.execute();
 	}
     
@@ -96,6 +109,7 @@ public class ScoutingActivity extends Activity {
 		setupDatabase();
 		setupLayouts();
 		setupTextViews();
+		setupSpinners();
 		setupVisualObjects();
 		setupQueueItems();
 	}
@@ -185,6 +199,14 @@ public class ScoutingActivity extends Activity {
     	missedNumberPicker = (NumberPickerCustom)findViewById(R.id.number_picker_missed_shots);
     	missedNumberPicker.setOnValueChangeListener(scoreGeneralNumberPickerOnValueChangeListener);
     	missedNumberPicker.setDescendantFocusability(NumberPicker.FOCUS_BLOCK_DESCENDANTS);
+    }
+    
+    private void setupSpinners() {
+    	hangabilitySpinner = (Spinner)findViewById(R.id.spinner_hangability);
+    	hangabilitySpinner.setOnItemSelectedListener(generalSpinnerListener);
+    	
+    	pickupMethodSpinner = (Spinner)findViewById(R.id.spinner_pickupability);
+    	pickupMethodSpinner.setOnItemSelectedListener(generalSpinnerListener);
     }
     
     
@@ -376,11 +398,29 @@ public class ScoutingActivity extends Activity {
 	};
 	
 	
+	Spinner.OnItemSelectedListener generalSpinnerListener = new Spinner.OnItemSelectedListener() {
+
+		@Override
+		public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
+			String data = parent.getItemAtPosition(pos).toString();
+			if (id == hangabilitySpinner.getId()) {
+				matchData.climb = data;
+			}
+		}
+
+		@Override
+		public void onNothingSelected(AdapterView<?> arg0) {
+			// TODO Auto-generated method stub
+			
+		}
+		
+	};
+	
 	
 	/*===============================================
 	 * Async Tasks
 	 *=============================================*/
-	AsyncTask<Void, Void, Void> saveData =  new AsyncTask<Void, Void, Void>() {
+	class SaveData extends AsyncTask<Void, Void, Void> {
 
 		@Override
 		protected Void doInBackground(Void... params) {

@@ -7,10 +7,10 @@
     <string name="button_mode_autonomous">Autonomous Mode</string>
     <string name="button_mode_teleop">Teleoperated Mode</string>
     
-    <string name="button_score_high">High</string>
+    <string name="button_score_high">Top</string>
     <string name="button_score_middle_right">Middle Right</string>
     <string name="button_score_middle_left">Middle Left</string>
-    <string name="button_score_low">Low</string>
+    <string name="button_score_low">Bottom</string>
     
     <string name="button_missed_shots">Missed</string>
     
@@ -35,6 +35,11 @@
     <string name="text_view_fivepointability_label">FivePointability</string>
     
     <string name="text_view_pickupability_label">Pickup Method</string>
+    <string name="text_view_pickupspeed_label">Pickup Speed</string>
+    
+    <string name="text_view_penalties_label">Penalties</string>
+    
+    <string name="text_view_defence_label">Defence</string>
     
     <!-- Arrays -->
     <string-array name="spinner_hangability_options_array">
@@ -66,6 +71,13 @@
         <item>Feeder And Floor</item>
     </string-array>
     
+    <string-array name="spinner_pickupspeed_options_array">
+        <item>No Pickup</item>
+        <item>Slow</item>
+        <item>Average</item>
+        <item>Fast</item>
+    </string-array>
+    
     <string-array name="spinner_fivepointability_options_array">
         <item>Did Not Attempt</item>
         <item>Shot And Made</item>
@@ -93,6 +105,11 @@
         <item>One or Two</item>
         <item>Three or Four</item>
         <item>Way too many</item>
+    </string-array>
+    
+    <string-array name="spinner_defence_options_array">
+        <item>No</item>
+        <item>Yes</item>
     </string-array>
 
 </resources>

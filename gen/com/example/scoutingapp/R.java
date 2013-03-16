@@ -10,15 +10,17 @@ package com.example.scoutingapp;
 public final class R {
     public static final class array {
         public static final int spinner_climbability_options_array=0x7f060002;
-        public static final int spinner_fivepointability_options_array=0x7f060004;
+        public static final int spinner_defence_options_array=0x7f060009;
+        public static final int spinner_fivepointability_options_array=0x7f060005;
         /**  Arrays 
          */
         public static final int spinner_hangability_options_array=0x7f060000;
-        public static final int spinner_penalties_options_array=0x7f060007;
+        public static final int spinner_penalties_options_array=0x7f060008;
         public static final int spinner_pickup_method_options_array=0x7f060003;
-        public static final int spinner_pickup_speed_options_array=0x7f060005;
+        public static final int spinner_pickup_speed_options_array=0x7f060006;
+        public static final int spinner_pickupspeed_options_array=0x7f060004;
         public static final int spinner_pushability_options_array=0x7f060001;
-        public static final int spinner_speed_options_array=0x7f060006;
+        public static final int spinner_speed_options_array=0x7f060007;
     }
     public static final class attr {
         /** <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
@@ -45,15 +47,17 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int ic_launcher=0x7f020000;
     }
     public static final class id {
-        public static final int SpinRate=0x7f080020;
-        public static final int WholeScreen=0x7f08001f;
+        public static final int SpinRate=0x7f080028;
+        public static final int WholeScreen=0x7f080027;
         public static final int button_missed_shots=0x7f08000b;
         public static final int button_mode=0x7f080000;
         public static final int button_score_high=0x7f080007;
         public static final int button_score_low=0x7f08000a;
         public static final int button_score_middle_left=0x7f080008;
         public static final int button_score_middle_right=0x7f080009;
-        public static final int mylist=0x7f08001e;
+        public static final int edit_text_defence=0x7f080024;
+        public static final int edit_text_tablet_number=0x7f080025;
+        public static final int mylist=0x7f080026;
         public static final int number_picker_missed_shots=0x7f080015;
         public static final int number_picker_score_high=0x7f080012;
         public static final int number_picker_score_low=0x7f080014;
@@ -61,20 +65,26 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int number_picker_score_middle_right=0x7f080013;
         public static final int relative_layout_scores=0x7f080006;
         public static final int scroll_view=0x7f080001;
-        public static final int spinner_fivepointability=0x7f08001d;
+        public static final int spinner_defence=0x7f080023;
+        public static final int spinner_fivepointability=0x7f080020;
         public static final int spinner_hangability=0x7f080018;
+        public static final int spinner_penalties=0x7f080021;
         public static final int spinner_pickupability=0x7f08001c;
+        public static final int spinner_pickupspeed=0x7f08001d;
         public static final int spinner_pushability=0x7f080019;
-        public static final int textView1=0x7f080021;
+        public static final int textView1=0x7f080029;
         public static final int text_view_bottom_basket_label=0x7f08000f;
-        public static final int text_view_fivepointability_label=0x7f08001b;
+        public static final int text_view_defence_label=0x7f080022;
+        public static final int text_view_fivepointability_label=0x7f08001e;
         public static final int text_view_hang_label=0x7f080016;
         public static final int text_view_match_number=0x7f080005;
         public static final int text_view_match_number_label=0x7f080004;
         public static final int text_view_middle_basket_left_label=0x7f08000c;
         public static final int text_view_middle_basket_right_label=0x7f08000e;
         public static final int text_view_missed_shots_label=0x7f080010;
+        public static final int text_view_penalties_label=0x7f08001f;
         public static final int text_view_pickupability_label=0x7f08001a;
+        public static final int text_view_pickupspeed_label=0x7f08001b;
         public static final int text_view_pushability_label=0x7f080017;
         public static final int text_view_team=0x7f080003;
         public static final int text_view_team_label=0x7f080002;
@@ -98,6 +108,7 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int button_score_middle_right=0x7f050004;
         public static final int text_view_bottom_basket_label=0x7f05000b;
         public static final int text_view_climbability_label=0x7f050013;
+        public static final int text_view_defence_label=0x7f050018;
         public static final int text_view_fivepointability_label=0x7f050014;
         public static final int text_view_hang_label=0x7f050011;
         public static final int text_view_match_number=0x7f050010;
@@ -105,7 +116,9 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int text_view_middle_basket_left_label=0x7f050009;
         public static final int text_view_middle_basket_right_label=0x7f05000a;
         public static final int text_view_missed_shots_label=0x7f05000c;
+        public static final int text_view_penalties_label=0x7f050017;
         public static final int text_view_pickupability_label=0x7f050015;
+        public static final int text_view_pickupspeed_label=0x7f050016;
         public static final int text_view_pushability_label=0x7f050012;
         public static final int text_view_team=0x7f05000e;
         public static final int text_view_team_label=0x7f05000d;

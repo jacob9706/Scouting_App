@@ -4,6 +4,17 @@
     android:layout_height="match_parent"
     android:orientation="vertical" >
 
+    <EditText
+        android:id="@+id/edit_text_tablet_number"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="Tablet Number"
+        android:inputType="number" >
+
+        <requestFocus />
+    </EditText>
+
     <ListView
         android:id="@+id/mylist"
         android:layout_width="match_parent"

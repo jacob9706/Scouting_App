@@ -30,7 +30,7 @@ public class DataV2 {
 	penalties = "",
 	speed = "",
 	defence = "",
-	notes;
+	notes = "";
 	
 	public DataV2(QueueItem q) {
 		this.team_number = q.teamNumber;

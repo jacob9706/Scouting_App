@@ -73,18 +73,26 @@ public class MatchDatabaseHelper {
 	}
 	
 	private boolean databaseExists() {
-		SQLiteDatabase testdb = null;
-		try {
-			testdb = SQLiteDatabase.openDatabase(DATABASE_LOCATION, null, SQLiteDatabase.OPEN_READONLY);
-		} catch (SQLiteException e) {
-			
+//		SQLiteDatabase testdb = null;
+//		try {
+//			testdb = SQLiteDatabase.openDatabase(DATABASE_LOCATION, null, SQLiteDatabase.OPEN_READONLY);
+//		} catch (SQLiteException e) {
+//			
+//		}
+//		
+//		if (testdb != null) {
+//			testdb.close();
+//		}
+//		
+//		return testdb == null ? false : true;
+		File dbFile = new File(DATABASE_LOCATION + 1 + DATABASE_END);
+		if (dbFile.isFile()) {
+			SQLiteDatabase dbTest = SQLiteDatabase.openOrCreateDatabase(dbFile, null);
+			if (dbTest.isOpen()) {
+				return true;
+			}
 		}
-		
-		if (testdb != null) {
-			testdb.close();
-		}
-		
-		return testdb == null ? false : true;
+		return false;
 	}
 	
 	private String getDBLocation(int dbNumber) {
@@ -112,11 +120,11 @@ public class MatchDatabaseHelper {
 				
 				"climb TEXT," +
 				"push TEXT," +
+				"shoot_fivepointer TEXT," +
 				
 				"stats_pickup_method TEXT," +
 				"stats_pickup_speed TEXT" +
 				"stats_penalties TEXT," +
-				"stats_speed TEXT," +
 				
 				"defence TEXT," +
 				"notes TEXT" +
