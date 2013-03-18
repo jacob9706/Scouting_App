@@ -4,8 +4,8 @@ public class Constants {
 	// Used as the size and index's for the score arrays
 
 	public static final boolean
-	TELEOP_STATUS = true,
-	AUTONOMOUS_STATUS = false;
+	TELEOP_STATUS = false,
+	AUTONOMOUS_STATUS = true;
 
 	public static final String
 	KEY_SCORE_HIGH_AUTO = "score_high_auto",

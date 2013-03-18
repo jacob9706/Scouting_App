@@ -3,8 +3,8 @@ package utils;
 public class DataV2 {
 	// General Info
 	public int
-	team_number,
-	match_number;
+	teamNumber,
+	matchNumber;
 	
 	// Autonomous Score Info
 	public int
@@ -29,11 +29,12 @@ public class DataV2 {
 	pickupSpeed = "",
 	penalties = "",
 	speed = "",
+	fivePointScore = "",
 	defence = "",
 	notes = "";
 	
 	public DataV2(QueueItem q) {
-		this.team_number = q.teamNumber;
-		this.match_number = q.matchNumber;
+		this.teamNumber = q.teamNumber;
+		this.matchNumber = q.matchNumber;
 	}
 }

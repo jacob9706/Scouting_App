@@ -17,7 +17,6 @@ import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
-import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
@@ -103,6 +102,7 @@ public class MainActivity extends Activity {
 			intent.putExtra("match_number", queueItems.get(position).matchNumber);
 			intent.putExtra("team_number", queueItems.get(position).teamNumber);
 			intent.putExtra("team_color", queueItems.get(position).color);
+			intent.putExtra("tabletNumber", tabletNumber);
 			startActivity(intent);
 		}
 	};
